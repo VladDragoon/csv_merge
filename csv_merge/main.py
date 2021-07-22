@@ -14,7 +14,7 @@ def process_workload(output_file, **args):
 
     input_data = load_data(**args)
     intermediate_data = merge_all_data(input_data)
-    output_data = parser.prepare(intermediate_data)
+    output_data = parser.prepare_to_write(intermediate_data)
     file_driver.save_data(output_file, output_data)
 
 def load_data(**kwargs):
@@ -46,4 +46,11 @@ if __name__ == '__main__':
         Sources.BANK3.name: f'{path}/bank3.csv'
     }
     output_file = 'data/target/output.csv'
-    process_workload(output_file, **workload)
+    # to simplify the usage of the script, exceptions got intercepted and printed
+    try:
+        print('Starting data processing...')
+        process_workload(output_file, **workload)
+        print('Data processing has been finished successfully')
+    except Exception as e:
+        print('Data processing has been failed. Reason:')
+        print(e)

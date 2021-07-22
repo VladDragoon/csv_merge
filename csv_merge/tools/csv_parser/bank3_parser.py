@@ -25,9 +25,10 @@ def transform(data):
             elif k == 'type':
                 record['transaction'] = v
             elif k == 'euro':
-                record['amount'] = row['euro'] + '.' + row['cents']
+                # padding zeroes to the left and to the right to have proper cents 
+                record['amount'] = str(int(row['euro'])) + '.' + str(int(row['cents'])).zfill(2).ljust(2, '0')
             elif k in {'from', 'to'}:
-                record[k] = v
+                record[k] = int(v)
             elif k != 'cents':
                 raise Exception(f'Unexpected column {k} obtained from BANK1')
         # sorting the dict to have the same order. 

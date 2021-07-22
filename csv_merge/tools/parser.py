@@ -28,7 +28,7 @@ def normalize_data(source_name, data):
         raise Exception(f'Unexpected source name: {source_name}')
     return normalized_data
 
-def prepare(data):
+def prepare_to_write(data):
     """Transform data to be properly saved into csv
 
     Args:

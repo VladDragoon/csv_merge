@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from csv_merge.tools.helpers import rpad
 
 def transform(data):
     """Transforms data to the target common structure:
@@ -24,8 +24,13 @@ def transform(data):
                 record['date'] = datetime.strptime(v,'%b %d %Y').strftime('%Y-%m-%d')
             elif k == 'type':
                 record['transaction'] = v
-            elif k in {'amount', 'from', 'to'}:
-                record[k] = v
+            elif k == 'amount':
+                # padding zeroes to the right to have proper cents 
+                # converting for the input data validation
+                record[k] = rpad(str(float(v)))
+            elif k in {'from', 'to'}:
+                # converting for the input data validation
+                record[k] = int(v)
             else:
                 raise Exception(f'Unexpected column {k} obtained from BANK1')
         # sorting the dict to have the same order. 
