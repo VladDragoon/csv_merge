@@ -1,4 +1,5 @@
 from datetime import datetime
+from csv_merge.tools.helpers import tuples_to_dicts
 
 
 def transform(data):
@@ -35,6 +36,6 @@ def transform(data):
         # Due to we have no requirement regarding the order, it will be alphabetical
         sorted_record = sorted(record.items(), key=lambda entity: entity[0])
         #due to sorted() function returns list of tuples, we need to get back list of dicts
-        dataset.append({k:v for k, v in sorted_record})
+        dataset.append(tuples_to_dicts(sorted_record))
 
     return dataset
